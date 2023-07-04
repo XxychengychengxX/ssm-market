@@ -3,6 +3,7 @@ package com.project.ssmproject2.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.ssmproject2.entity.SmbmsUser;
 import com.project.ssmproject2.mapper.SmbmsUserMapper;
@@ -13,6 +14,7 @@ import com.project.ssmproject2.system.response.NormalSelectResponse;
 import com.project.ssmproject2.system.response.NormalUpdateResponse;
 import com.project.ssmproject2.system.util.MySetAttribute;
 import com.project.ssmproject2.system.util.MyToken;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Transactional
 public class SmbmsUserServiceImpl extends ServiceImpl<SmbmsUserMapper, SmbmsUser> implements ISmbmsUserService {
+
+    @Resource
+    SmbmsUserMapper smbmsUserMapper;
 
     /**
      * 用户登录服务方法
@@ -176,6 +181,31 @@ public class SmbmsUserServiceImpl extends ServiceImpl<SmbmsUserMapper, SmbmsUser
         }
         return NormalUpdateResponse.generate(true, 1,
                 "权限不足");
+    }
+
+    /**
+     * 按页来返回当前页的user
+     *
+     * @param page          所查询的页
+     * @param authorization 令牌token
+     * @return NormalResponse中的NormalSelectResponse封装成的对象
+     */
+    @Override
+    public NormalSelectResponse selectUserInPage(Integer page, String authorization) {
+        Page<SmbmsUser> smbmsUserPage = new Page<>(page, 5);
+        page(smbmsUserPage, null);
+        return NormalSelectResponse.generate(true, 0, "查询成功", smbmsUserPage);
+    }
+
+    /**
+     * 获得总页数，一页五个
+     *
+     * @return 返回有多少页数的总量
+     */
+    @Override
+    public NormalUpdateResponse gerUserPageCount() {
+        long count = (long) Math.ceil((double) count() / 5.0);
+        return NormalUpdateResponse.generate(true, 0, String.valueOf(count));
     }
 
     /**

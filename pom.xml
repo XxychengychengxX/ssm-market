@@ -39,6 +39,8 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.3.1</version>
         </dependency>
+
+
         <!--springboot的JDBC包-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -62,6 +64,18 @@
             <artifactId>mybatis-plus-boot-starter-test</artifactId>
             <version>3.5.3.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.5.3.1</version>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
+        </dependency>-->
         <!--druid连接池-->
         <dependency>
             <groupId>com.alibaba</groupId>
