@@ -1,0 +1,35 @@
+#关于logback的配置，这里不在
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/ssmproject?userUnicode=true&characterEncoding=utf-8&userSSL=false
+    password: 121148
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+  mapper-locations: classpath:com/project/ssmproject2/mapper/*.xml
+
+
+
+server:
+  port: 9988
+
+mybatis:
+  mapper-locations: classpath:com/project/ssmproject2/mapper/*.xml
+
+logging:
+  config: classpath:logback.xml
+
+
