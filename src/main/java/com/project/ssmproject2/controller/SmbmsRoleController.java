@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/smbms-role")
-@CrossOrigin(origins = {"https://localhost:5173"})
+@CrossOrigin(origins = {"http://localhost:5173","http://localhost:5173/"},allowCredentials = "true")
 
 public class SmbmsRoleController {
 

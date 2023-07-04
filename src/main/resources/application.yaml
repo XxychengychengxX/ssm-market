@@ -8,7 +8,6 @@ spring:
     username: root
     type: com.alibaba.druid.pool.DruidDataSource
 
-
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -19,17 +18,19 @@ mybatis-plus:
     auto-mapping-behavior: full
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+
   mapper-locations: classpath:com/project/ssmproject2/mapper/*.xml
 
 
 
-server:
-  port: 9988
 
 mybatis:
   mapper-locations: classpath:com/project/ssmproject2/mapper/*.xml
 
 logging:
+
   config: classpath:logback.xml
 
+server:
+  port: 9988
 

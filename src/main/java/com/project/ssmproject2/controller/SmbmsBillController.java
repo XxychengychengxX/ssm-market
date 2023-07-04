@@ -3,6 +3,7 @@ package com.project.ssmproject2.controller;
 import com.project.ssmproject2.entity.SmbmsBill;
 import com.project.ssmproject2.service.ISmbmsBillService;
 import com.project.ssmproject2.system.config.WithAuthorizationHeader;
+import com.project.ssmproject2.system.response.NormalSelectResponse;
 import com.project.ssmproject2.system.response.NormalUpdateResponse;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,33 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/smbms-bill")
-@CrossOrigin(origins = {"https://localhost:5173"})
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5173/", "https://localhost:5173"
+        , "https://localhost:5173/","http://192.168.0.107:5173","http://192.168.0.107:5173/"}, allowCredentials =
+        "true")
 public class SmbmsBillController {
     @Resource
     ISmbmsBillService iSmbmsBillService;
+
+   /* @GetMapping("/getBillPageCount")
+    @WithAuthorizationHeader
+    public NormalUpdateResponse getBillPageCount(@RequestHeader("Authorization") String
+    authorization) {
+        return iSmbmsBillService.getBillPageCount();
+    }*/
+
+    /**
+     * 用户查看当前订单表
+     *
+     * @param page 查询的当前页数
+     * @return 查询数组的JSON字符串
+     */
+    @GetMapping("/billsGet/{page}")
+    @WithAuthorizationHeader
+    public NormalSelectResponse selectBillInPage(@PathVariable("page") Integer page,
+                                                 @RequestHeader("Authorization") String authorization) {
+        return iSmbmsBillService.selectBillInPage(page, authorization);
+
+    }
 
     /**
      * 管理员添加订单

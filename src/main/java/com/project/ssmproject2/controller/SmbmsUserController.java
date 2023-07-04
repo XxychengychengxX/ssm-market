@@ -18,12 +18,36 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/smbms-user")
-@CrossOrigin(origins = {"https://localhost:5173"})
-
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5173/", "https://localhost:5173"
+        , "https://localhost:5173/","http://192.168.0" +
+        ".107:5173", "http://192.168.0.107:5173/"}, allowCredentials =
+        "true")
+//http://localhost:5173
 public class SmbmsUserController {
 
     @Resource
     ISmbmsUserService iSmbmsUserService;
+
+
+    /*@GetMapping("/getUserPageCount")
+    public NormalUpdateResponse getUserPageCount(@RequestHeader("Authorization") String
+    authorization) {
+        return iSmbmsUserService.gerUserPageCount();
+    }*/
+
+    /**
+     * 用户查看当前用户表
+     *
+     * @param page 查询的当前页数
+     * @return 查询数组的JSON字符串
+     */
+    @GetMapping("/usersGet/{page}")
+    @CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5173/"}, allowCredentials =
+            "true")
+    public NormalSelectResponse userSelectInPage(@PathVariable("page") Integer page) {
+
+        return iSmbmsUserService.selectUserInPage(page, null);
+    }
 
     /**
      * 用户登录
@@ -54,7 +78,8 @@ public class SmbmsUserController {
      * @param userPassword  用户新密码
      * @return NormalResponse中的NormalUpdateResponse字符串
      */
-    @PutMapping("/updateUserPassword") @WithAuthorizationHeader
+    @PutMapping("/updateUserPassword")
+    @WithAuthorizationHeader
     public NormalUpdateResponse userUpdatePassword(@RequestHeader("Authorization") String authorization,
                                                    @RequestParam("userPassword") String userPassword) {
         return iSmbmsUserService.updatePassword(authorization, userPassword);
@@ -67,7 +92,8 @@ public class SmbmsUserController {
      * @param authorization 令牌
      * @return NormalResponse中的NormalSelectResponse字符串
      */
-    @GetMapping("/selectUser/{Id}") @WithAuthorizationHeader
+    @GetMapping("/userSelect/{Id}")
+    @WithAuthorizationHeader
     public NormalSelectResponse userSelectById(@PathVariable("Id") Long id,
                                                @RequestHeader("Authorization") String authorization) {
         return iSmbmsUserService.selectUser(id, authorization);
@@ -80,10 +106,11 @@ public class SmbmsUserController {
      * @param authorization 令牌
      * @return NormalResponse中的NormalUpdateResponse
      */
-    @PostMapping("/addUser") @WithAuthorizationHeader
+    @PostMapping("/userAdd")
+    @WithAuthorizationHeader
     public NormalUpdateResponse userAdd(@RequestBody RegisterModel registerModel,
-                          @RequestHeader("Authorization") String authorization) {
-        return iSmbmsUserService.addUser(registerModel,authorization);
+                                        @RequestHeader("Authorization") String authorization) {
+        return iSmbmsUserService.addUser(registerModel, authorization);
     }
 
     /**
@@ -93,7 +120,8 @@ public class SmbmsUserController {
      * @param authorization 令牌token
      * @return NormalResponse中的NormalUpdateResponse的JSON字符串
      */
-    @DeleteMapping("/deleteUser/{Id}") @WithAuthorizationHeader
+    @DeleteMapping("/userDelete/{Id}")
+    @WithAuthorizationHeader
     public NormalUpdateResponse userDelete(@PathVariable("Id") Long id,
                                            @RequestHeader("Authorization") String authorization) {
         return iSmbmsUserService.deleteUser(id, authorization);
@@ -106,7 +134,8 @@ public class SmbmsUserController {
      * @param authorization 令牌token
      * @return NormalResponse中的NormalUpdateResponse的JSON字符串
      */
-    @PutMapping("/updateUser") @WithAuthorizationHeader
+    @PutMapping("/userUpdate")
+    @WithAuthorizationHeader
     public NormalUpdateResponse userUpdate(@RequestBody SmbmsUser smbmsUser,
                                            @RequestHeader("Authorization") String authorization) {
         return iSmbmsUserService.updateUser(smbmsUser, authorization);

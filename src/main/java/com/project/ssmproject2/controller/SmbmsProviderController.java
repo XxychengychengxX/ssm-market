@@ -4,6 +4,7 @@ import com.project.ssmproject2.entity.SmbmsProvider;
 import com.project.ssmproject2.service.ISmbmsProviderService;
 import com.project.ssmproject2.system.config.WithAuthorizationHeader;
 import com.project.ssmproject2.system.model.ProviderAddModel;
+import com.project.ssmproject2.system.response.NormalSelectResponse;
 import com.project.ssmproject2.system.response.NormalUpdateResponse;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,35 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/smbms-provider")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5173/", "https://localhost:5173"
+        , "https://localhost:5173/","http://192.168.0.107:5173","http://192.168.0.107:5173/"},
+        allowCredentials =
+        "true")
 public class SmbmsProviderController {
 
     @Resource
     ISmbmsProviderService iSmbmsProviderService;
+
+   /* @GetMapping("/getProviderPageCount")
+    @WithAuthorizationHeader
+    public NormalUpdateResponse gerProviderPageCount( @RequestHeader("Authorization") String
+    authorization){
+        return iSmbmsProviderService.gerProviderPageCount();
+    }*/
+
+    /**
+     * 用户查看当前供应商表
+     *
+     * @param page 查询的当前页数
+     * @return 查询数组的JSON字符串
+     */
+    @GetMapping("/providersGet/{page}")
+    @WithAuthorizationHeader
+    public NormalSelectResponse selectProviderInPage(@PathVariable("page") Integer page,
+                                                     @RequestHeader("Authorization") String authorization) {
+        return iSmbmsProviderService.selectProviderInPage(page, authorization);
+
+    }
 
     /**
      * 管理员添加供应商
@@ -31,8 +57,6 @@ public class SmbmsProviderController {
 
     @WithAuthorizationHeader
     @PostMapping("/providerAdd")
-    @CrossOrigin(origins = {"https://localhost:5173"})
-
     public NormalUpdateResponse providerAdd(@RequestHeader("Authorization") String authorization,
                                             @RequestBody ProviderAddModel provider) {
         return iSmbmsProviderService.providerAdd(authorization, provider);

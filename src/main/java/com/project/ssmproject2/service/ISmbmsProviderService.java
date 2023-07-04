@@ -3,6 +3,7 @@ package com.project.ssmproject2.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.ssmproject2.entity.SmbmsProvider;
 import com.project.ssmproject2.system.model.ProviderAddModel;
+import com.project.ssmproject2.system.response.NormalSelectResponse;
 import com.project.ssmproject2.system.response.NormalUpdateResponse;
 
 /**
@@ -14,6 +15,20 @@ import com.project.ssmproject2.system.response.NormalUpdateResponse;
  * @since 2023-07-01
  */
 public interface ISmbmsProviderService extends IService<SmbmsProvider> {
+
+    /**
+     * 获得总页数，一页五个
+     *
+     * @return 返回有多少页数的总量
+     */
+    NormalUpdateResponse gerProviderPageCount();
+    /**
+     * 按页来返回当前页的user
+     * @param page 所查询的页
+     * @param authorization 令牌token
+     * @return NormalResponse中的NormalSelectResponse封装成的对象
+     */
+    NormalSelectResponse selectProviderInPage(Integer page, String authorization);
     /**
      * 管理创建供应商对象的服务方法
      *

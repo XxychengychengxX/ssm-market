@@ -77,5 +77,18 @@ public interface ISmbmsUserService extends IService<SmbmsUser> {
      */
     NormalUpdateResponse updatePassword(String authorization, String userPassword);
 
+    /**
+     * 按页来返回当前页的user
+     * @param page 所查询的页
+     * @param authorization 令牌token
+     * @return NormalResponse中的NormalSelectResponse封装成的对象
+     */
+    NormalSelectResponse selectUserInPage(Integer page, String authorization);
+
+    /**
+     * 获得总页数，一页五个
+     * @return 返回有多少页数的总量
+     */
+    NormalUpdateResponse gerUserPageCount();
 
 }

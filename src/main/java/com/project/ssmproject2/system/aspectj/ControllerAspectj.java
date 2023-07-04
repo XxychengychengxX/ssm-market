@@ -40,7 +40,7 @@ public class ControllerAspectj {
                 return NormalUpdateResponse.generate(true, 3, "身份验证失败,请重新登录后重试");
             else
                 return NormalUpdateResponse.generate(true, 5,
-                        "出错,请检查后重试!\n具体信息如下 :\n" + ex.getCause().getMessage());
+                        "出错,请检查后重试!\n具体信息如下 :\n" + ex.getMessage());
         }
         return proceed;
     }

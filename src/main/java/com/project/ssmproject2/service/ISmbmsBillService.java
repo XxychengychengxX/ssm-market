@@ -2,6 +2,7 @@ package com.project.ssmproject2.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.project.ssmproject2.entity.SmbmsBill;
+import com.project.ssmproject2.system.response.NormalSelectResponse;
 import com.project.ssmproject2.system.response.NormalUpdateResponse;
 
 /**
@@ -13,6 +14,21 @@ import com.project.ssmproject2.system.response.NormalUpdateResponse;
  * @since 2023-07-01
  */
 public interface ISmbmsBillService extends IService<SmbmsBill> {
+    /**
+     * 获得总页数，一页五个
+     *
+     * @return 返回有多少页数的总量
+     */
+    NormalUpdateResponse getBillPageCount();
+
+    /**
+     * 按页来返回当前页的user
+     * @param page 所查询的页
+     * @param authorization 令牌token
+     * @return NormalResponse中的NormalSelectResponse封装成的对象
+     */
+    NormalSelectResponse selectBillInPage(Integer page, String authorization);
+
     /**
      * 管理员删除供应商的服务方法
      *
